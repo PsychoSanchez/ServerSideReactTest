@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a265e2b83db748a4a36279f2664b3098" Name="Diagram1">
+        <EntityTypeShape EntityType="StudeModel.Courses" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudeModel.Groups" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudeModel.GroupsWorkers" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudeModel.Organisations" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudeModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudeModel.Tutors" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudeModel.Workers" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="StudeModel.FK_Groups_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="StudeModel.FK_GroupsWorkers_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="StudeModel.FK_Tutors_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="StudeModel.FK_GroupsWorkers_Workers" ManuallyRouted="false" />
+        <AssociationConnector Association="StudeModel.FK_Tutors_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="StudeModel.FK_Workers_Organisations" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

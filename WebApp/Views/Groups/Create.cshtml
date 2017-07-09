@@ -1,0 +1,17 @@
+﻿@model IEnumerable<WebApp.Models.TutorsModel>
+<!--<div id="breadcrumps">Too lazy to do</div>-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">@Html.ActionLink("Учебные группы", "Index")</li>
+  <li class="breadcrumb-item">@Html.ActionLink("Создать учебную группу", "Create")</li>
+</ol>
+<h4>Создать учебную группу</h4>
+<hr />
+
+<div id="content" class="form-horizontal">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+<script src="@Url.Content("~/ReactNET/CreateGroup.jsx")"></script>
+<!--<script src="@Url.Content("~/ReactNET/BreadCrumps.jsx")"></script>-->

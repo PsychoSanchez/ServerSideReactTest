@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="CourseID" />
+    </Key>
+    <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Courses" FromRole="Courses" ToRole="Groups" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="GroupID" />
+    </Key>
+    <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TutorID" Type="Int32" />
+    <Property Name="CourseID" Type="Int32" />
+    <NavigationProperty Name="Courses" Relationship="Self.FK_Groups_Courses" FromRole="Groups" ToRole="Courses" />
+    <NavigationProperty Name="GroupsWorkers" Relationship="Self.FK_GroupsWorkers_Groups" FromRole="Groups" ToRole="GroupsWorkers" />
+    <NavigationProperty Name="Tutors" Relationship="Self.FK_Tutors_Groups" FromRole="Groups" ToRole="Tutors" />
+  </EntityType>
+  <EntityType Name="GroupsWorkers">
+    <Key>
+      <PropertyRef Name="GroupsWorkersID" />
+    </Key>
+    <Property Name="GroupsWorkersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <Property Name="WorkerID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Groups" Relationship="Self.FK_GroupsWorkers_Groups" FromRole="GroupsWorkers" ToRole="Groups" />
+    <NavigationProperty Name="Workers" Relationship="Self.FK_GroupsWorkers_Workers" FromRole="GroupsWorkers" ToRole="Workers" />
+  </EntityType>
+  <EntityType Name="Organisations">
+    <Key>
+      <PropertyRef Name="OrganisationsID" />
+    </Key>
+    <Property Name="OrganisationsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Inn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tutors" Relationship="Self.FK_Tutors_Organisations" FromRole="Organisations" ToRole="Tutors" />
+    <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_Organisations" FromRole="Organisations" ToRole="Workers" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tutors">
+    <Key>
+      <PropertyRef Name="TutorID" />
+    </Key>
+    <Property Name="TutorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrgainsationID" Type="Int32" />
+    <Property Name="GroupID" Type="Int32" />
+    <NavigationProperty Name="Groups" Relationship="Self.FK_Tutors_Groups" FromRole="Tutors" ToRole="Groups" />
+    <NavigationProperty Name="Organisations" Relationship="Self.FK_Tutors_Organisations" FromRole="Tutors" ToRole="Organisations" />
+  </EntityType>
+  <EntityType Name="Workers">
+    <Key>
+      <PropertyRef Name="WorkerID" />
+    </Key>
+    <Property Name="WorkerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrganisationID" Type="Int32" />
+    <NavigationProperty Name="GroupsWorkers" Relationship="Self.FK_GroupsWorkers_Workers" FromRole="Workers" ToRole="GroupsWorkers" />
+    <NavigationProperty Name="Organisations" Relationship="Self.FK_Workers_Organisations" FromRole="Workers" ToRole="Organisations" />
+  </EntityType>
+  <Association Name="FK_Groups_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseID" />
+      </Principal>
+      <Dependent Role="Groups">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupsWorkers_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+    <End Role="GroupsWorkers" Type="Self.GroupsWorkers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="GroupsWorkers">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tutors_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+    <End Role="Tutors" Type="Self.Tutors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Tutors">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupsWorkers_Workers">
+    <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+    <End Role="GroupsWorkers" Type="Self.GroupsWorkers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workers">
+        <PropertyRef Name="WorkerID" />
+      </Principal>
+      <Dependent Role="GroupsWorkers">
+        <PropertyRef Name="WorkerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tutors_Organisations">
+    <End Role="Organisations" Type="Self.Organisations" Multiplicity="0..1" />
+    <End Role="Tutors" Type="Self.Tutors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisations">
+        <PropertyRef Name="OrganisationsID" />
+      </Principal>
+      <Dependent Role="Tutors">
+        <PropertyRef Name="OrgainsationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workers_Organisations">
+    <End Role="Organisations" Type="Self.Organisations" Multiplicity="0..1" />
+    <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisations">
+        <PropertyRef Name="OrganisationsID" />
+      </Principal>
+      <Dependent Role="Workers">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudyEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Courses" EntityType="Self.Courses" />
+    <EntitySet Name="Groups" EntityType="Self.Groups" />
+    <EntitySet Name="GroupsWorkers" EntityType="Self.GroupsWorkers" />
+    <EntitySet Name="Organisations" EntityType="Self.Organisations" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tutors" EntityType="Self.Tutors" />
+    <EntitySet Name="Workers" EntityType="Self.Workers" />
+    <AssociationSet Name="FK_Groups_Courses" Association="Self.FK_Groups_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Groups" EntitySet="Groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupsWorkers_Groups" Association="Self.FK_GroupsWorkers_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="GroupsWorkers" EntitySet="GroupsWorkers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tutors_Groups" Association="Self.FK_Tutors_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Tutors" EntitySet="Tutors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupsWorkers_Workers" Association="Self.FK_GroupsWorkers_Workers">
+      <End Role="Workers" EntitySet="Workers" />
+      <End Role="GroupsWorkers" EntitySet="GroupsWorkers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tutors_Organisations" Association="Self.FK_Tutors_Organisations">
+      <End Role="Organisations" EntitySet="Organisations" />
+      <End Role="Tutors" EntitySet="Tutors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workers_Organisations" Association="Self.FK_Workers_Organisations">
+      <End Role="Organisations" EntitySet="Organisations" />
+      <End Role="Workers" EntitySet="Workers" />
+    </AssociationSet>
+    <FunctionImport Name="AddStudent">
+      <Parameter Name="workerId" Mode="In" Type="Int32" />
+      <Parameter Name="groupId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CreateGroup">
+      <Parameter Name="tutorID" Mode="In" Type="Int32" />
+      <Parameter Name="groupName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="EditGroup">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetGroupData" ReturnType="Collection(StudeModel.GetGroupData_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetGroups" ReturnType="Collection(StudeModel.GetGroups_Result)" />
+    <FunctionImport Name="GetOrganisationsWorkers" ReturnType="Collection(StudeModel.GetOrganisationsWorkers_Result)" />
+    <FunctionImport Name="GeTtutors" ReturnType="Collection(StudeModel.GeTtutors_Result)" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(StudeModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(StudeModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="GetGroupData_Result">
+    <Property Type="Int32" Name="DataRecordId" Nullable="false" />
+    <Property Type="String" Name="GroupName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="WorkerName" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="TutorName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="OrganisationName" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="GetGroups_Result">
+    <Property Type="Int32" Name="GroupID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="TutorID" Nullable="true" />
+    <Property Type="Int32" Name="StudentsCount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetOrganisationsWorkers_Result">
+    <Property Type="Int32" Name="OrganisationID" Nullable="false" />
+    <Property Type="String" Name="OrganisationName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="WorkerID" Nullable="true" />
+    <Property Type="String" Name="WorkerName" Nullable="true" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="GeTtutors_Result">
+    <Property Type="Int32" Name="TutorID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
