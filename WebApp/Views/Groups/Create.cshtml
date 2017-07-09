@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<WebApp.Models.TutorsModel>
+@{ 
+    ViewBag.Title = "Создать учебную группу";
+}
 <!--<div id="breadcrumps">Too lazy to do</div>-->
 <ol class="breadcrumb">
   <li class="breadcrumb-item">@Html.ActionLink("Учебные группы", "Index")</li>
-  <li class="breadcrumb-item">@Html.ActionLink("Создать учебную группу", "Create")</li>
+  <li class="breadcrumb-item active">Создать учебную группу</li>
 </ol>
 <h4>Создать учебную группу</h4>
 <hr />
