@@ -22,4 +22,29 @@ namespace WebApp.Models
         public string GroupName { get; set; }
         public int TutorID { get; set; }
     }
+
+    public partial class GetGroupsDataModel
+    {
+        public int DataRecordID { get; set; }
+        public int WorkerID { get; set; }
+        public string GroupName { get; set; }
+        [Display(Name = "Студент")]
+        public string WorkerName { get; set; }
+        public string TutorName { get; set; }
+        [Display(Name = "Организация")]
+        public string OrganisationName { get; set; }
+    }
+
+    public partial class GroupDataModel
+    {
+        public int GroupID { get; set; }
+        public string GroupName { get; set; }
+        public string TutorName { get; set; }
+    }
+
+    public partial class AddStudentModel
+    {
+        public int GroupID { get; set; }
+        public int WorkerID { get; set; }
+    }
 }

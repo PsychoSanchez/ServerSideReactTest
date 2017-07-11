@@ -1,0 +1,56 @@
+﻿@model WebApp.Models.OrganisationsWorkersModel
+
+@{
+    ViewBag.Title = "Добавить студента в учебную группу";
+    ViewBag.Organisation = 0;
+} 
+
+<h4>@ViewBag.Title</h4>
+  <hr />
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">@Html.ActionLink("Учебные группы", "Index")</li>
+    <li class="breadcrumb-item active">@ViewBag.Title</li>
+</ol>
+
+<div class="row form-group">
+    <div class="col-xs-2"><label>Учебная группа</label></div>
+    <div class="col-xs-10">@ViewBag.GroupInfo.GroupName</div>
+</div>
+
+<div class="row form-group">
+    <div class="col-xs-2"><label>Преподаватель</label></div>
+    <div class="col-xs-10">@ViewBag.GroupInfo.TutorName</div>
+</div>
+<div class="row form-group">
+    <div class="col-xs-12 form-group">Организация</div>
+    <div class="col-xs-12">
+    @Html.DropDownListFor(model => model.OrganisationID,
+        Model.Organisations.Select(h => new SelectListItem
+        {
+            Text = h.OrganisationName,
+            Value = h.OrganisationID.ToString()
+        }), new { id = "organisations-dropdown", @class = "form-control" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-xs-12 form-group">Сотрудник</div>
+    <div class="col-xs-12">
+        @Html.DropDownListFor(model => model.WorkerID,
+    Model.Workers.Select(h => new SelectListItem
+    {
+        Text = h.WorkerName,
+        Value = h.WorkerID.ToString() + "_" + h.OrganisationID.ToString()
+    }),new { id = "workers-dropdown", @class = "form-control" })
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-xs-12">
+        <button class="btn btn-default add-student-btn">Добавить студента в учебную группу</button>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Custom/addStudent.js"></script>
+}

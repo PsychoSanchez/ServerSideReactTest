@@ -1,38 +1,60 @@
-﻿@model WebApp.Models.Groups
+﻿@model IEnumerable<WebApp.Models.GetGroupsDataModel>
 
-<div class="form-horizontal">
-    <h4>Groups</h4>
+@{
+    ViewBag.Title = "Редактировать учебную группу";
+}
+
+<h4>@ViewBag.Title</h4>
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.GroupID)
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">@Html.ActionLink("Учебные группы", "Index")</li>
+  <li class="breadcrumb-item active">@ViewBag.Title</li>
+</ol>
+@Html.React("EditGroup", new
+{
+    info = ViewBag.GroupInfo,
+    url = Url.Action("/Groups/GetGroupData/" + ViewBag.GroupId),
+    actionLink = Url.Action("EditGroup")
+})
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WorkerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrganisationName)
+                </th>
+                <th></th>
+            </tr>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrganisationName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Удалить из группы", "RemoveStudent", new { id = item.DataRecordID })
+                    </td>
+                </tr>
+            }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TutorID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TutorID, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TutorID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CourseID, "CourseID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("CourseID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
+        </table>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.ActionLink("Добавить сутдента", "AddStudentToGroup", new { ViewBag.GroupId }, new { @class = "btn btn-default" })
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+<script src="@Url.Content("~/ReactNET/EditGroup.jsx")"></script>
+@Html.ReactInitJavaScript()

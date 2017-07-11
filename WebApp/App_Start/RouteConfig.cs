@@ -16,20 +16,38 @@ namespace WebApp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "GroupsController", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Groups", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "GetTutors",
                 url: "GetTutors",
-                defaults: new { controller = "GroupsController", action = "GetTutors" }
+                defaults: new { controller = "Groups", action = "GetTutors" }
             );
 
             routes.MapRoute(
                name: "AddGroup",
                url: "AddGroup",
-               defaults: new { controller = "GroupsController", action = "AddTutors" }
-           );
+               defaults: new { controller = "Groups", action = "AddGroup" }
+            );
+
+            routes.MapRoute(
+               name: "EditGroup",
+               url: "EditGroup",
+               defaults: new { controller = "Groups", action = "EditGroup" }
+            );
+
+            routes.MapRoute(
+               name: "AddStudent",
+               url: "AddStudent",
+               defaults: new { controller = "Groups", action = "AddStudent" }
+            );
+
+            routes.MapRoute(
+               name: "RemoveStudent",
+               url: "RemoveStudent",
+               defaults: new { controller = "GroupsController", action = "RemoveStudent" }
+            );
         }
     }
 }

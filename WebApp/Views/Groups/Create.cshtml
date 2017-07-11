@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<WebApp.Models.TutorsModel>
 @{ 
     ViewBag.Title = "Создать учебную группу";
-}
+} 
+<h4>@ViewBag.Title</h4>
+  <hr />
 <!--<div id="breadcrumps">Too lazy to do</div>-->
 <ol class="breadcrumb">
   <li class="breadcrumb-item">@Html.ActionLink("Учебные группы", "Index")</li>
-  <li class="breadcrumb-item active">Создать учебную группу</li>
+  <li class="breadcrumb-item active">@ViewBag.Title</li>
 </ol>
-<h4>Создать учебную группу</h4>
-<hr />
 
 <div id="content" class="form-horizontal">
 </div>
