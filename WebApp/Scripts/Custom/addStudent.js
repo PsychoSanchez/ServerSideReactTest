@@ -55,7 +55,7 @@
         var groupId = getParameterByName('GroupId');
         $.ajax({
             type: 'POST',
-            url: '/Groups/AddStudent',
+            url: './AddStudent',
             data: {
                 WorkerID: workerId,
                 GroupID: groupId
@@ -63,7 +63,7 @@
             success: function (response) {
                 switch (response.result) {
                     case 'Added':
-                        window.location = '/Groups/Edit/' + groupId
+                        window.location = './Edit/' + groupId
                         break;
                     case 'Exist':
                         $addStudentBtn.parent().parent().after(INFO_ALERT);

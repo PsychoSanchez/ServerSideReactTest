@@ -1,4 +1,4 @@
-// Server side rendering
+﻿// Server side rendering
 //_____________________________________________________________
 
 const GROUP_NAME_LENGTH_ERROR_MESSAGE = 'Название группы может быть не менее 1 и не более 50 символов';

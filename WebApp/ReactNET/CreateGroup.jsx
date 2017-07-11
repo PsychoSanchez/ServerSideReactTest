@@ -67,9 +67,14 @@ var GroupSettings = React.createClass({
         TutorID: tutor,
         GroupName: name
       },
-      success: function () {
+      success: function (data) {
         // Redirect to main page
-        window.location = "/Groups/Index";
+        if (data.result = "Success") {
+          window.location = "./Edit/" + data.payload.GroupID;
+        } else {
+          // ToDo: Mistake Handler
+          console.log(data);
+        }
       },
       error: function () {
         // Error message
@@ -118,6 +123,6 @@ var GroupSettings = React.createClass({
 
 // Client side rendering
 ReactDOM.render(
-  <GroupSettings url="/Groups/GetTutors" actionLink="/Groups/AddGroup" />,
+  <GroupSettings url="./GetTutors" actionLink="./AddGroup" />,
   document.querySelector('#content')
 );

@@ -47,15 +47,17 @@ namespace WebApp.Controllers
         }
 
         [OutputCache(Location = OutputCacheLocation.None)]
-        public ActionResult GetTutors()
+        public JsonResult GetTutors()
         {
             var tutors = db.Database.SqlQuery<TutorsModel>("EXEC GetTutors").ToList();
             return Json(tutors, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult AddGroup(AddGroupModel model)
+        public JsonResult AddGroup(AddGroupModel model)
         {
+            string result = "Fail";
+            GroupDataModel data = null;
             try
             {
                 var query = new StringBuilder("EXEC CreateGroup @tutorID = ")
@@ -64,13 +66,19 @@ namespace WebApp.Controllers
                 .Append(model.GroupName)
                 .Append("';");
                 db.Database.ExecuteSqlCommand(query.ToString());
+                result = "Success";
+                data = db.Database.SqlQuery<GroupDataModel>("EXEC GetGroups").Last();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 // throw;
             }
-            return RedirectToAction("Index");
+            return Json(new
+                {
+                    result = result,
+                    payload = data
+                });
         }
         [HttpPost]
         public ActionResult EditGroup(GroupDataModel model)
